@@ -7,8 +7,10 @@ import {
   Text,
   View,
 } from "react-native";
+import Header from "../components/Header";
 import ProductCard from "../components/ProductCard";
 import productsAPI from "../apis/Products";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 function ProductListScreen(props: any) {
   const [products, setProducts] = useState([]);
@@ -51,7 +53,8 @@ function ProductListScreen(props: any) {
 
   return (
     <View>
-      <Text>Product List</Text>
+      <Header />
+      <Breadcrumbs />
       <FlatList
         data={products}
         keyExtractor={(item, index) => "key" + index}
