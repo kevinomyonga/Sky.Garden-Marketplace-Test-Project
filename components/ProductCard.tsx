@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -24,9 +25,33 @@ const ProductCard = ({ item, navigation }: { item: any; navigation: any }) => {
           {item.title}
         </Text>
         <Text style={styles.price}>
-          {item.stock_record_price_currency} {item.stock_record_price_retail}
+          {item.stock_record_price_currency}{" "}
+          {item.stock_record_price_retail
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </Text>
-        <Button title="Add To Cart" onPress={addToCart} />
+        {item.offer_benefit_value > 0 ? (
+          <Text style={styles.oldPrice}>
+            {item.stock_record_price_currency}{" "}
+            {(item.stock_record_price_retail + item.offer_benefit_value)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            /-
+          </Text>
+        ) : null}
+        <TouchableOpacity activeOpacity={0.9} onPress={addToCart}>
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>Add To Cart</Text>
+            <Image
+              style={styles.buttonLine}
+              source={require("../assets/images/Line.png")}
+            />
+            <Image
+              style={styles.buttonIcon}
+              source={require("../assets/images/shopping-cart.png")}
+            />
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -71,11 +96,39 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 16,
   },
-  addToCart: {
-    paddingLeft: 14,
-    paddingRight: 14,
-    paddingTop: 12,
-    paddingBottom: 12,
+  oldPrice: {
+    fontFamily: "Satoshi",
+    fontStyle: "normal",
+    fontWeight: "900",
+    fontSize: 11,
+    color: "#4D4D4D",
+    textDecorationLine: "line-through",
+  },
+  button: {
+    height: 28,
+    backgroundColor: "#333333",
+    borderRadius: 6,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 5,
+    flexDirection: "row",
+  },
+  buttonText: {
+    fontFamily: "Satoshi",
+    fontStyle: "normal",
+    fontWeight: "900",
+    fontSize: 10,
+    color: "#F7FDF9",
+  },
+  buttonLine: {
+    width: 1,
+    height: 18,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  buttonIcon: {
+    width: 14,
+    height: 14,
   },
 });
 

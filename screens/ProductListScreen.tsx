@@ -5,6 +5,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -20,11 +21,21 @@ const { width, height } = Dimensions.get("window");
 
 function ProductListScreen({ navigation }: { navigation: any }) {
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     getProductsFromAPI();
   }, []);
+
+  const renderFooter = () => {
+    return (
+      //Footer View with page numbers
+      <View>
+        <Text>Footer</Text>
+      </View>
+    );
+  };
 
   function getProductsFromAPI() {
     setLoading(true);
@@ -54,6 +65,7 @@ function ProductListScreen({ navigation }: { navigation: any }) {
       })
       .catch(function (error) {
         console.log(error);
+        setLoading(false);
       });
   }
 
@@ -69,26 +81,40 @@ function ProductListScreen({ navigation }: { navigation: any }) {
         style={styles.backgroundImage}
         source={require("../assets/images/Product_List_Background.png")}
       />
-      <ScrollView style={styles.productListContainer}>
+      <ScrollView
+        style={styles.productListContainer}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={getProductsFromAPI}
+          />
+        }
+      >
         <Text style={styles.listTitle} numberOfLines={2}>
           Smartphones
         </Text>
-        <FlatList
-          data={products}
-          keyExtractor={(item, index) => "key" + index}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              activeOpacity={0.9}
-              onPress={() => {
-                navigation.navigate("ProductDetail", { item: item });
-              }}
-            >
-              <ProductCard item={item} navigation={navigation} />
-            </TouchableOpacity>
-          )}
-          numColumns={2}
-          columnWrapperStyle={{ justifyContent: "space-between" }}
-        />
+        {!loading ? (
+          <FlatList
+            data={products}
+            keyExtractor={(item, index) => "key" + index}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => {
+                  navigation.navigate("ProductDetail", { item: item });
+                }}
+              >
+                <ProductCard item={item} navigation={navigation} />
+              </TouchableOpacity>
+            )}
+            numColumns={2}
+            columnWrapperStyle={{ justifyContent: "space-between" }}
+            ListFooterComponent={renderFooter}
+            nestedScrollEnabled={true}
+          />
+        ) : (
+          <ActivityIndicator size="large" color="#0000ff" />
+        )}
       </ScrollView>
     </View>
   );
@@ -106,7 +132,6 @@ const styles = StyleSheet.create({
   backgroundImage: {
     width: width,
     height: 552,
-    paddingTop: -800,
     position: "absolute",
     zIndex: -1,
   },

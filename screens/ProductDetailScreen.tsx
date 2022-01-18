@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from "react-native";
 import Header from "../components/Header";
@@ -42,14 +43,29 @@ function ProductDetailScreen({
             />
           </View>
           <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.price}>
-            {item.stock_record_price_currency} {item.stock_record_price_retail}
-          </Text>
-          <Button
-            title="Add To Cart"
-            onPress={addToCart}
-            style={styles.button}
-          />
+          <View style={styles.priceContainer}>
+            <Text style={styles.price}>
+              {item.stock_record_price_currency}{" "}
+              {item.stock_record_price_retail
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              /-
+            </Text>
+            {item.offer_benefit_value > 0 ? (
+              <Text style={styles.oldPrice}>
+                {item.stock_record_price_currency}{" "}
+                {(item.stock_record_price_retail + item.offer_benefit_value)
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                /-
+              </Text>
+            ) : null}
+          </View>
+          <TouchableOpacity activeOpacity={0.9} onPress={addToCart}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>ADD TO CART</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <Image
           source={require("../assets/images/Wave.png")}
@@ -82,10 +98,10 @@ function ProductDetailScreen({
                 paddingBottom: 30,
               }}
             >
-              <Text style={styles.customerCareText}>60 Bought here</Text>
+              <Text>60 Bought here</Text>
               <View style={{ flex: 1 }} />
               <View style={{ width: 18 }} />
-              <Text style={styles.customerCareText}>13 Reviews</Text>
+              <Text>13 Reviews</Text>
             </View>
           </View>
         </View>
@@ -133,6 +149,10 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     color: "#4D4D4D",
   },
+  priceContainer: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+  },
   price: {
     fontFamily: "Satoshi",
     fontStyle: "normal",
@@ -140,11 +160,30 @@ const styles = StyleSheet.create({
     fontSize: 21,
     color: "#55D187",
   },
+  oldPrice: {
+    fontFamily: "Satoshi",
+    fontStyle: "normal",
+    fontWeight: "900",
+    fontSize: 16,
+    color: "#4D4D4D",
+    textDecorationLine: "line-through",
+    marginLeft: 15,
+  },
   button: {
-    width: width,
+    width: width * 0.9,
     height: 62,
     backgroundColor: "#55D187",
-    borderRadius: 8,
+    borderRadius: 6,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  buttonText: {
+    fontFamily: "Satoshi",
+    fontStyle: "normal",
+    fontWeight: "900",
+    fontSize: 21.5,
+    color: "#F7FDF9",
   },
   wave: {
     width: width,

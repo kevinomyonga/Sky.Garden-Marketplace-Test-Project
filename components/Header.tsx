@@ -87,10 +87,10 @@ const Header = ({ navigation }: { navigation: any }) => {
             placeholder="Search for anything"
             placeholderTextColor="#9D9D9D"
           />
-          {/* <Image
-          style={styles.actionItem}
-          source={require("../assets/images/search.png")}
-        /> */}
+          <Image
+            style={styles.searchBarIcon}
+            source={require("../assets/images/search.png")}
+          />
         </View>
       </View>
     </View>
@@ -146,16 +146,27 @@ const styles = StyleSheet.create({
     width: width,
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 8,
-    paddingBottom: 15,
+    paddingTop: 10,
+    paddingBottom: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    flexDirection: "row",
   },
   searchBarInput: {
+    flex: 1,
     height: 40,
     backgroundColor: "#FFFFFF",
     borderRadius: 68,
     borderWidth: 1,
     paddingLeft: 15,
-    paddingRight: 15,
+    paddingRight: 42,
+  },
+  searchBarIcon: {
+    width: 24,
+    height: 24,
+    position: "absolute",
+    right: 34,
   },
 });
 
