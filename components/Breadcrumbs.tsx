@@ -1,12 +1,36 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 
-const Breadcrumbs = () => {
+const { width, height } = Dimensions.get("window");
+
+const Breadcrumbs = ({ path }: { path: string }) => {
   return (
-    <View>
-      <Text>Breadcrumbs</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>{path}</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: width,
+    height: 45,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 26,
+    paddingRight: 26,
+    paddingTop: 16,
+    paddingBottom: 16,
+    backgroundColor: "#F7FDF9",
+    position: "relative",
+  },
+  text: {
+    fontFamily: "Satoshi",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: 10,
+    color: "#9D9D9D",
+  },
+});
 
 export default Breadcrumbs;

@@ -13,7 +13,7 @@ import {
 
 const { width, height } = Dimensions.get("window");
 
-const ProductCard = ({ item, navigation }: { item: any; navigation: any }) => {
+const CartCard = ({ item, navigation }: { item: any; navigation: any }) => {
   const addToCart = () => null;
 
   return (
@@ -78,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductCard;
+export default CartCard;

@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import {
   ActivityIndicator,
   Button,
+  Dimensions,
   FlatList,
+  Image,
+  ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import Header from "../components/Header";
@@ -12,7 +16,10 @@ import ProductCard from "../components/ProductCard";
 import productsAPI from "../apis/Products";
 import Breadcrumbs from "../components/Breadcrumbs";
 
-function ProductListScreen(props: any) {
+const { width, height } = Dimensions.get("window");
+
+function ProductListScreen({ navigation }: { navigation: any }) {
+  const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -20,6 +27,8 @@ function ProductListScreen(props: any) {
   }, []);
 
   function getProductsFromAPI() {
+    setLoading(true);
+
     const params = JSON.stringify({
       search:
         "offer_benefit_type eq 'Absolute' and category_slug eq 'smartphones' ",
@@ -41,6 +50,7 @@ function ProductListScreen(props: any) {
       .then(function (response) {
         setProducts(response.data.value);
         console.log(products);
+        setLoading(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -52,19 +62,58 @@ function ProductListScreen(props: any) {
   }
 
   return (
-    <View>
-      <Header />
-      <Breadcrumbs />
-      <FlatList
-        data={products}
-        keyExtractor={(item, index) => "key" + index}
-        renderItem={({ item }) => {
-          return <ProductCard item={item} />;
-        }}
-        numColumns={2}
+    <View style={{ flex: 1 }}>
+      <Header navigation={navigation} />
+      <Breadcrumbs path="Home / Mobile phones & Tablets / Smartphones" />
+      <Image
+        style={styles.backgroundImage}
+        source={require("../assets/images/Product_List_Background.png")}
       />
+      <ScrollView style={styles.productListContainer}>
+        <Text style={styles.listTitle} numberOfLines={2}>
+          Smartphones
+        </Text>
+        <FlatList
+          data={products}
+          keyExtractor={(item, index) => "key" + index}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => {
+                navigation.navigate("ProductDetail", { data: item });
+              }}
+            >
+              <ProductCard item={item} navigation={navigation} />
+            </TouchableOpacity>
+          )}
+          numColumns={2}
+        />
+      </ScrollView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  listTitle: {
+    fontFamily: "Satoshi",
+    fontStyle: "normal",
+    fontWeight: "800",
+    fontSize: 25,
+    paddingTop: 29.07,
+    paddingBottom: 22,
+  },
+  backgroundImage: {
+    width: width,
+    height: 552,
+    paddingTop: -800,
+    position: "absolute",
+    zIndex: -1,
+  },
+  productListContainer: {
+    flex: 1,
+    paddingLeft: 30,
+    paddingRight: 30,
+  },
+});
 
 export default ProductListScreen;
