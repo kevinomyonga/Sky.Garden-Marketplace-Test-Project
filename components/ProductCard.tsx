@@ -35,10 +35,10 @@ const ProductCard = ({ item, navigation }: { item: any; navigation: any }) => {
 const styles = StyleSheet.create({
   cardView: {
     backgroundColor: "#fff",
-    width: 170,
+    width: width * 0.4,
     height: 280,
     flex: 1,
-    margin: width * 0.02,
+    marginBottom: width * 0.05,
     borderRadius: 4,
     shadowColor: "#000",
     shadowOffset: { width: 0.5, height: 0.5 },
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   image: {
     height: height / 6,
     flex: 1,
+    borderRadius: 4,
   },
   textView: {
     paddingLeft: 14,

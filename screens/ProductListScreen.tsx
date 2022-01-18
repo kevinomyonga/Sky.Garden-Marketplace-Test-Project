@@ -80,13 +80,14 @@ function ProductListScreen({ navigation }: { navigation: any }) {
             <TouchableOpacity
               activeOpacity={0.9}
               onPress={() => {
-                navigation.navigate("ProductDetail", { data: item });
+                navigation.navigate("ProductDetail", { item: item });
               }}
             >
               <ProductCard item={item} navigation={navigation} />
             </TouchableOpacity>
           )}
           numColumns={2}
+          columnWrapperStyle={{ justifyContent: "space-between" }}
         />
       </ScrollView>
     </View>

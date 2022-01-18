@@ -10,6 +10,7 @@ import {
   StatusBar,
   Dimensions,
   TouchableOpacity,
+  Linking,
 } from "react-native";
 
 const { width, height } = Dimensions.get("window");
@@ -25,9 +26,25 @@ const Header = ({ navigation }: { navigation: any }) => {
           <Text style={styles.customerCareText}>Customer Care</Text>
           <Image source={require("../assets/images/chevron-down.png")} />
           <View style={{ flex: 1 }} />
-          <Text style={styles.customerCareText}>Sell</Text>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => {
+              Linking.openURL(
+                "https://play.google.com/store/apps/details?id=garden.sky.shop"
+              );
+            }}
+          >
+            <Text style={styles.customerCareText}>Sell</Text>
+          </TouchableOpacity>
           <View style={{ width: 18 }} />
-          <Text style={styles.customerCareText}>Help & Contact</Text>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => {
+              Linking.openURL("https://kevinomyonga.com");
+            }}
+          >
+            <Text style={styles.customerCareText}>Help & Contact</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.navBar}>
           <Image
@@ -86,8 +103,9 @@ const styles = StyleSheet.create({
     height: 140,
   },
   statusBarContainer: {
+    flex: Platform.OS === "ios" ? 1 : 0,
     backgroundColor: "#1D1D1D",
-    height: StatusBar.currentHeight,
+    height: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   customerCareBar: {
     width: width,
