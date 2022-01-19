@@ -14,7 +14,6 @@ const Breadcrumbs = ({ path }: { path: string }) => {
 const styles = StyleSheet.create({
   container: {
     width: width,
-    height: 45,
     flexDirection: "row",
     alignItems: "center",
     paddingLeft: 26,
@@ -30,6 +29,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 10,
     color: "#9D9D9D",
+    lineHeight: 13,
   },
 });
 

@@ -5,6 +5,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -42,6 +43,19 @@ function ProductDetailScreen({
               style={styles.imageGalleryItem}
             />
           </View>
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 30,
+              alignItems: "baseline",
+            }}
+          >
+            <Text style={styles.partnerName}>{item.partner_name}</Text>
+            <Image
+              source={require("../assets/images/verified.png")}
+              style={styles.verified}
+            />
+          </View>
           <Text style={styles.title}>{item.title}</Text>
           <View style={styles.priceContainer}>
             <Text style={styles.price}>
@@ -66,12 +80,29 @@ function ProductDetailScreen({
               <Text style={styles.buttonText}>ADD TO CART</Text>
             </View>
           </TouchableOpacity>
+          <View style={styles.calculateShippingContainer}>
+            <Image
+              style={styles.calculateShippingIcon}
+              source={require("../assets/images/DeliveryCar-Top.png")}
+            />
+            <Text style={styles.calculateShippingText}>
+              Delivery within Nairobi CBD from as low as Ksh 100{" "}
+              <Text
+                style={{ color: "blue" }}
+                onPress={() =>
+                  Linking.openURL("https://sky.garden/same-day-delivery")
+                }
+              >
+                Calculate Shipping
+              </Text>
+            </Text>
+          </View>
         </View>
         <Image
           source={require("../assets/images/Wave.png")}
           style={styles.wave}
         />
-        <View style={styles.colouredContainer}>
+        <View style={styles.descriptionContainer}>
           <View style={styles.cardView}>
             <Text style={styles.title}>Know your Seller</Text>
             <View style={{ flexDirection: "row", paddingTop: 13 }}>
@@ -118,7 +149,33 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingBottom: 40,
   },
-  colouredContainer: {
+  calculateShippingContainer: {
+    width: width * 0.9,
+    paddingLeft: 18,
+    paddingRight: 18,
+    paddingTop: 19,
+    paddingBottom: 19,
+    backgroundColor: "#DEF5DA",
+    borderRadius: 8,
+    marginTop: 10,
+    flexDirection: "row",
+  },
+  calculateShippingIcon: {
+    width: 62,
+    height: 33,
+    marginRight: 16,
+  },
+  calculateShippingText: {
+    fontFamily: "Satoshi",
+    fontStyle: "normal",
+    fontWeight: "500",
+    fontSize: 12,
+    color: "#4D4D4D",
+    lineHeight: 16,
+    flex: 1,
+    flexWrap: "wrap",
+  },
+  descriptionContainer: {
     width: width,
     paddingLeft: 26,
     paddingRight: 26,
@@ -140,6 +197,19 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 8,
+  },
+  partnerName: {
+    fontFamily: "Satoshi",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: 11,
+    color: "#4D4D4D",
+    textDecorationLine: "underline",
+    marginRight: 10,
+  },
+  verified: {
+    width: 20,
+    height: 20,
   },
   title: {
     fontFamily: "Satoshi",

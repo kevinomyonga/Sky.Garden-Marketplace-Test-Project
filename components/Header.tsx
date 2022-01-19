@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ContextType, useContext, useState } from "react";
 import {
   Image,
   TextInput,
@@ -13,10 +13,16 @@ import {
   Linking,
 } from "react-native";
 
+import Constants from "expo-constants";
+import { CartContext } from "../context/CartContext";
+
 const { width, height } = Dimensions.get("window");
 
 const Header = ({ navigation }: { navigation: any }) => {
   const [text, onChangeText] = React.useState("");
+
+  //const { getItemsCount } = useContext(CartContext) as ContextType;
+  const [cartTotal, setCartTotal] = useState(4);
 
   return (
     <View>
@@ -73,10 +79,19 @@ const Header = ({ navigation }: { navigation: any }) => {
               navigation.navigate("Cart");
             }}
           >
-            <Image
-              style={styles.actionItem}
-              source={require("../assets/images/shopping-cart.png")}
-            />
+            <View style={styles.notificationBadgeContainer}>
+              <Image
+                style={styles.actionItem}
+                source={require("../assets/images/shopping-cart.png")}
+              />
+              {cartTotal > 0 ? (
+                <View style={styles.notificationBadge}>
+                  <Text style={styles.notificationBadgeText}>
+                    {cartTotal <= 99 ? cartTotal : "99+"}
+                  </Text>
+                </View>
+              ) : null}
+            </View>
           </TouchableOpacity>
         </View>
         <View style={styles.searchBar}>
@@ -105,7 +120,7 @@ const styles = StyleSheet.create({
   statusBarContainer: {
     flex: Platform.OS === "ios" ? 1 : 0,
     backgroundColor: "#1D1D1D",
-    height: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    paddingTop: Constants.statusBarHeight,
   },
   customerCareBar: {
     width: width,
@@ -142,12 +157,34 @@ const styles = StyleSheet.create({
     height: 24,
     marginLeft: 16,
   },
+  notificationBadgeContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    flexDirection: "row",
+  },
+  notificationBadge: {
+    position: "absolute",
+    backgroundColor: "#55D187",
+    borderRadius: 60,
+    right: 0,
+    top: 0,
+  },
+  notificationBadgeText: {
+    fontFamily: "Satoshi",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: 8,
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    color: "#000000",
+  },
   searchBar: {
     width: width,
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 8,
+    paddingBottom: 15,
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
@@ -167,6 +204,7 @@ const styles = StyleSheet.create({
     height: 24,
     position: "absolute",
     right: 34,
+    bottom: 21,
   },
 });
 

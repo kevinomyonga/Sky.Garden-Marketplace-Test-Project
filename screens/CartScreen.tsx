@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ContextType, useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Button,
@@ -14,13 +14,29 @@ import {
 import Header from "../components/Header";
 import Breadcrumbs from "../components/Breadcrumbs";
 import CartCard from "../components/CartCard";
+import { CartContext } from "../context/CartContext";
 
 const { width, height } = Dimensions.get("window");
 
 function CartScreen({ navigation }: { navigation: any }) {
-  const [cartTotal, setCartTotal] = useState(0);
-
   const proceedToCheckout = () => null;
+
+  function Totals() {
+    const [cartTotal, setCartTotal] = useState(0);
+    useEffect(() => {
+      setCartTotal(0);
+    });
+    return (
+      <View style={styles.totalSection}>
+        <Text style={styles.totalText}>Total</Text>
+        <View style={{ flex: 1 }} />
+        <Text style={styles.totalText}>
+          Ksh {cartTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          /-
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View>
@@ -28,20 +44,15 @@ function CartScreen({ navigation }: { navigation: any }) {
       <Breadcrumbs path="Home  /  Cart" />
       <ScrollView style={styles.cartContainer}>
         <Text style={styles.screenTitle}>My cart</Text>
-        <FlatList />
-        <CartCard />
-        <View style={styles.totalSection}>
-          <Text style={styles.totalText}>Total</Text>
-          <View style={{ flex: 1 }} />
-          <Text style={styles.totalText}>
-            Ksh {cartTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            /-
-          </Text>
-        </View>
+        {/* <FlatList />
+        <CartCard /> */}
+        <Totals />
         <View style={{ alignItems: "center" }}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>Proceed To Checkout</Text>
-          </View>
+          <TouchableOpacity activeOpacity={0.9} onPress={proceedToCheckout}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Proceed To Checkout</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
