@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ActivityIndicator,
   Button,
@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Moment from "moment";
 import Header from "../components/Header";
 import Breadcrumbs from "../components/Breadcrumbs";
 
@@ -30,17 +31,42 @@ function ProductDetailScreen({
 
   const addToCart = () => null;
 
+  const [selectedThumbnail, setSelectedThumbnail] = useState(
+    item.image_list[0]
+  );
+
+  const handleImageSelection = (id: any) => {
+    if (selectedThumbnail !== id) {
+      setSelectedThumbnail(id);
+    }
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <Header navigation={navigation} />
       <Breadcrumbs path="Home  /  Clothes & Footwear  /  For Women   /   Women's Clothing" />
       <ScrollView>
         <View style={styles.container}>
-          <Image source={{ uri: item.thumbnail }} style={styles.image} />
+          <Image source={{ uri: selectedThumbnail }} style={styles.image} />
           <View style={styles.imageGallery}>
-            <Image
-              source={{ uri: item.thumbnail }}
-              style={styles.imageGalleryItem}
+            <FlatList
+              horizontal={true}
+              extraData={selectedThumbnail}
+              data={item.image_list}
+              keyExtractor={(item, index) => "key" + index}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() => {
+                    handleImageSelection(item);
+                  }}
+                >
+                  <Image
+                    source={{ uri: item }}
+                    style={styles.imageGalleryItem}
+                  />
+                </TouchableOpacity>
+              )}
             />
           </View>
           <View
@@ -51,10 +77,12 @@ function ProductDetailScreen({
             }}
           >
             <Text style={styles.partnerName}>{item.partner_name}</Text>
-            <Image
-              source={require("../assets/images/verified.png")}
-              style={styles.verified}
-            />
+            {item.partner_is_skygarden_verified ? (
+              <Image
+                source={require("../assets/images/verified.png")}
+                style={styles.verified}
+              />
+            ) : null}
           </View>
           <Text style={styles.title}>{item.title}</Text>
           <View style={styles.priceContainer}>
@@ -103,22 +131,30 @@ function ProductDetailScreen({
           style={styles.wave}
         />
         <View style={styles.descriptionContainer}>
+          <Text style={styles.descriptionTitle}>Description</Text>
+          <Text style={styles.descriptionText}>{item.description}</Text>
           <View style={styles.cardView}>
             <Text style={styles.title}>Know your Seller</Text>
             <View style={{ flexDirection: "row", paddingTop: 13 }}>
               <View>
-                <Text style={styles.sellerDetails}>{item.partner_name}</Text>
+                <Text style={styles.partnerName}>{item.partner_name}</Text>
                 <Text style={styles.sellerDetails}>
-                  On Sky.Gardensince 2019
+                  On Sky.Garden since{" "}
+                  {Moment(item.partner_date_created).format("YYYY")}
                 </Text>
-                <Text style={styles.sellerDetails}>Nairobi, Kenya</Text>
+                <Text style={styles.sellerDetails}>
+                  {item.partner_city}
+                  {item.partner_country_display
+                    ? ", " + item.partner_country_display
+                    : null}
+                </Text>
                 <Text style={styles.sellerDetails}>
                   Item Availability Within 24hrs
                 </Text>
               </View>
               <View style={{ flex: 1 }} />
               <Image
-                source={{ uri: item.thumbnail }}
+                source={{ uri: item.partner_profile_image }}
                 style={styles.sellerImage}
               />
             </View>
@@ -126,7 +162,6 @@ function ProductDetailScreen({
               style={{
                 flexDirection: "row",
                 paddingTop: 13,
-                paddingBottom: 30,
               }}
             >
               <Text>60 Bought here</Text>
@@ -177,11 +212,12 @@ const styles = StyleSheet.create({
   },
   descriptionContainer: {
     width: width,
-    paddingLeft: 26,
-    paddingRight: 26,
+    paddingLeft: 35,
+    paddingRight: 35,
     paddingTop: 10,
     paddingBottom: 35,
     backgroundColor: "#DEF5DA",
+    flex: 1,
   },
   image: {
     height: 362,
@@ -197,6 +233,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 8,
+    marginRight: 16,
   },
   partnerName: {
     fontFamily: "Satoshi",
@@ -259,16 +296,30 @@ const styles = StyleSheet.create({
     width: width,
     height: 38.5,
   },
+  descriptionTitle: {
+    fontFamily: "Satoshi",
+    fontStyle: "normal",
+    fontWeight: "900",
+    fontSize: 17,
+    color: "#4D4D4D",
+  },
+  descriptionText: {
+    fontFamily: "Satoshi",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: 14,
+    color: "#4D4D4D",
+  },
   cardView: {
     backgroundColor: "#fff",
     flex: 1,
-    margin: width * 0.02,
     borderRadius: 4,
     shadowColor: "#000",
     shadowOffset: { width: 0.5, height: 0.5 },
     shadowOpacity: 0.5,
     shadowRadius: 3,
     padding: 30,
+    marginTop: 38,
   },
   sellerDetails: {
     fontFamily: "Satoshi",

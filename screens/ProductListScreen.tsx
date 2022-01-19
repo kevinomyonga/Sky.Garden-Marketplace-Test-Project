@@ -31,7 +31,7 @@ function ProductListScreen({ navigation }: { navigation: any }) {
   const renderFooter = () => {
     return (
       //Footer View with page numbers
-      <View>
+      <View style={styles.footer}>
         <Text>Footer</Text>
       </View>
     );
@@ -44,7 +44,7 @@ function ProductListScreen({ navigation }: { navigation: any }) {
       search:
         "offer_benefit_type eq 'Absolute' and category_slug eq 'smartphones' ",
       select:
-        "title, partner_name, thumbnail, stock_record_price_currency, stock_record_price_retail, offer_benefit_type, offer_benefit_value, category_name, category_slug",
+        "productId, title, partner_name, thumbnail, image_list, stock_record_price_currency, stock_record_price_retail, offer_benefit_type, offer_benefit_value, category_name, category_slug, description, partner_profile_image, partner_display_name, partner_date_created, partner_city, partner_country_display, partner_is_skygarden_verified",
     });
 
     productsAPI
@@ -139,6 +139,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 30,
     paddingRight: 30,
+  },
+  footer: {
+    flex: 1,
+    paddingTop: 5,
+    paddingBottom: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

@@ -44,8 +44,15 @@ function CartScreen({ navigation }: { navigation: any }) {
       <Breadcrumbs path="Home  /  Cart" />
       <ScrollView style={styles.cartContainer}>
         <Text style={styles.screenTitle}>My cart</Text>
-        {/* <FlatList />
-        <CartCard /> */}
+        <FlatList />
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => {
+            navigation.navigate("NotFound", {});
+          }}
+        >
+          <CartCard />
+        </TouchableOpacity>
         <Totals />
         <View style={{ alignItems: "center" }}>
           <TouchableOpacity activeOpacity={0.9} onPress={proceedToCheckout}>

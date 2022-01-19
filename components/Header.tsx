@@ -53,10 +53,17 @@ const Header = ({ navigation }: { navigation: any }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.navBar}>
-          <Image
-            style={styles.hamburgerMenu}
-            source={require("../assets/images/Hamburger_Menu.png")}
-          />
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => {
+              navigation.navigate("Cart");
+            }}
+          >
+            <Image
+              style={styles.hamburgerMenu}
+              source={require("../assets/images/Hamburger_Menu.png")}
+            />
+          </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => {
