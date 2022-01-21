@@ -1,22 +1,15 @@
-import React, { ContextType, useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
-  Button,
-  Dimensions,
   FlatList,
-  Image,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import Header from "../components/Header";
-import Breadcrumbs from "../components/Breadcrumbs";
-import CartCard from "../components/CartCard";
-import { CartContext } from "../context/CartContext";
-
-const { width, height } = Dimensions.get("window");
+import styles from "./styles";
+import Header from "../../components/Header";
+import Breadcrumbs from "../../components/Breadcrumbs";
+import CartCard from "../../components/CartCard";
 
 function CartScreen({ navigation }: { navigation: any }) {
   const proceedToCheckout = () => null;
@@ -65,47 +58,5 @@ function CartScreen({ navigation }: { navigation: any }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  cartContainer: {
-    paddingLeft: 17,
-    paddingRight: 17,
-  },
-  screenTitle: {
-    fontFamily: "Satoshi",
-    fontStyle: "normal",
-    fontWeight: "800",
-    fontSize: 25,
-    paddingTop: 27.07,
-    paddingBottom: 20,
-  },
-  totalSection: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  totalText: {
-    fontFamily: "Satoshi",
-    fontStyle: "normal",
-    fontWeight: "900",
-    fontSize: 16,
-    paddingTop: 27,
-    paddingBottom: 27,
-  },
-  button: {
-    width: width * 0.7,
-    height: 40,
-    backgroundColor: "#55D187",
-    borderRadius: 6,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    fontFamily: "Satoshi",
-    fontStyle: "normal",
-    fontWeight: "900",
-    fontSize: 16,
-    color: "#F7FDF9",
-  },
-});
 
 export default CartScreen;

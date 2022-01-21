@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react";
 import {
   ActivityIndicator,
-  Button,
-  Dimensions,
   FlatList,
   Image,
   RefreshControl,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import Header from "../components/Header";
-import ProductCard from "../components/ProductCard";
-import productsAPI from "../apis/Products";
-import Breadcrumbs from "../components/Breadcrumbs";
-
-const { width, height } = Dimensions.get("window");
+import styles from "./styles";
+import Header from "../../components/Header";
+import ProductCard from "../../components/ProductCard";
+import productsAPI from "../../apis/Products";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
 function ProductListScreen({ navigation }: { navigation: any }) {
   const [loading, setLoading] = useState(true);
@@ -79,7 +75,7 @@ function ProductListScreen({ navigation }: { navigation: any }) {
       <Breadcrumbs path="Home / Mobile phones & Tablets / Smartphones" />
       <Image
         style={styles.backgroundImage}
-        source={require("../assets/images/Product_List_Background.png")}
+        source={require("../../assets/images/Product_List_Background.png")}
       />
       <ScrollView
         style={styles.productListContainer}
@@ -119,34 +115,5 @@ function ProductListScreen({ navigation }: { navigation: any }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  listTitle: {
-    fontFamily: "Satoshi",
-    fontStyle: "normal",
-    fontWeight: "800",
-    fontSize: 25,
-    paddingTop: 29.07,
-    paddingBottom: 22,
-  },
-  backgroundImage: {
-    width: width,
-    height: 552,
-    position: "absolute",
-    zIndex: -1,
-  },
-  productListContainer: {
-    flex: 1,
-    paddingLeft: 30,
-    paddingRight: 30,
-  },
-  footer: {
-    flex: 1,
-    paddingTop: 5,
-    paddingBottom: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 
 export default ProductListScreen;
