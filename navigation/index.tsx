@@ -4,7 +4,6 @@
  *
  */
 import { FontAwesome } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   NavigationContainer,
   DefaultTheme,
@@ -20,12 +19,6 @@ import CartScreen from "../screens/CartScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import ProductDetailScreen from "../screens/ProductDetailScreen";
 import ProductListScreen from "../screens/ProductListScreen";
-import ProductList from "../screens/ProductListScreen";
-import {
-  RootStackParamList,
-  RootTabParamList,
-  RootTabScreenProps,
-} from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 
 export default function Navigation({
