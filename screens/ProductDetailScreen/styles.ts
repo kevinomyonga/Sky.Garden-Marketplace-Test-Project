@@ -122,6 +122,19 @@ const styles = StyleSheet.create({
     width: width,
     height: 38.5,
   },
+  collapsingContainer: {
+    width: width * 0.9,
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingTop: 11.5,
+    paddingBottom: 11.5,
+  },
+  collapsingContainerIcon: {
+    width: 12,
+    height: 6,
+    flex: 1,
+  },
   descriptionTitle: {
     fontFamily: "Satoshi",
     fontStyle: "normal",

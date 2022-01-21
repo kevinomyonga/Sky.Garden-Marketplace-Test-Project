@@ -8,10 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import {
+  Collapse,
+  CollapseHeader,
+  CollapseBody,
+  AccordionList,
+} from "accordion-collapse-react-native";
+
 import styles from "./styles";
 import Moment from "moment";
 import Header from "../../components/Header";
 import Breadcrumbs from "../../components/Breadcrumbs";
+import { AirbnbRating, Rating } from "react-native-ratings";
 
 function ProductDetailScreen({
   route,
@@ -125,8 +133,40 @@ function ProductDetailScreen({
           style={styles.wave}
         />
         <View style={styles.descriptionContainer}>
-          <Text style={styles.descriptionTitle}>Description</Text>
-          <Text style={styles.descriptionText}>{item.description}</Text>
+          <Collapse>
+            <CollapseHeader>
+              <View style={styles.collapsingContainer}>
+                <Text style={styles.descriptionTitle}>Description</Text>
+                <Image
+                  style={styles.collapsingContainerIcon}
+                  source={require("../../assets/images/chevron-down.png")}
+                />
+              </View>
+            </CollapseHeader>
+            <CollapseBody>
+              <Text style={styles.descriptionText}>{item.description}</Text>
+            </CollapseBody>
+          </Collapse>
+          <Collapse>
+            <CollapseHeader>
+              <View style={styles.collapsingContainer}>
+                <Text style={styles.descriptionTitle}>Product Reviews</Text>
+              </View>
+            </CollapseHeader>
+            <CollapseBody>
+              <Text style={styles.descriptionText}>{item.description}</Text>
+            </CollapseBody>
+          </Collapse>
+          <Collapse>
+            <CollapseHeader>
+              <View style={styles.collapsingContainer}>
+                <Text style={styles.descriptionTitle}>Shipping & Returns</Text>
+              </View>
+            </CollapseHeader>
+            <CollapseBody>
+              <Text style={styles.descriptionText}>{item.description}</Text>
+            </CollapseBody>
+          </Collapse>
           <View style={styles.cardView}>
             <Text style={styles.title}>Know your Seller</Text>
             <View style={{ flexDirection: "row", paddingTop: 13 }}>
@@ -161,6 +201,7 @@ function ProductDetailScreen({
               <Text>60 Bought here</Text>
               <View style={{ flex: 1 }} />
               <View style={{ width: 18 }} />
+              <Rating ratingCount={5} imageSize={17} />
               <Text>13 Reviews</Text>
             </View>
           </View>
